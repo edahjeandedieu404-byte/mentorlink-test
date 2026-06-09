@@ -1,122 +1,37 @@
 {% extends "base.html" %}
-{% block title %}Créer une offre{% endblock %}
-{% block page_title %}Créer une offre de mentorat{% endblock %}
+{% block title %}Créer une offre - MentorLink{% endblock %}
 
 {% block content %}
-<div style="max-width:650px;margin:0 auto;">
+<div style="max-width:600px; margin:0 auto;">
     <div class="card">
-        <div class="card-header">
-            <span class="card-title">
-                <i class="fas fa-chalkboard-teacher" style="color:var(--accent);"></i>
-                Nouvelle offre de mentorat
-            </span>
-        </div>
-        <div class="card-body">
-            <form method="post">
-                {% csrf_token %}
-
-                <div class="form-group">
-                    <label class="form-label">Titre de l'offre</label>
-                    <input type="text" name="titre" class="form-control"
-                           placeholder="Ex: Aide en Algorithmique et Python" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Description</label>
-                    <textarea name="description" class="form-control" rows="4"
-                              placeholder="Décris ce que tu peux apporter..." required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-book" style="color:var(--accent);margin-right:6px;"></i>
-                        Matières que tu peux enseigner
-                    </label>
-
-                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-                        <button type="button" onclick="filtrerCat(this,'all')" data-cat="all"
-                                style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--accent);background:var(--accent);color:white;font-size:0.75rem;font-weight:700;cursor:pointer;">
-                            Tout
-                        </button>
-                        <button type="button" onclick="filtrerCat(this,'info')" data-cat="info" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Informatique</button>
-                        <button type="button" onclick="filtrerCat(this,'dev')" data-cat="dev" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Développement</button>
-                        <button type="button" onclick="filtrerCat(this,'bd')" data-cat="bd" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Bases de données</button>
-                        <button type="button" onclick="filtrerCat(this,'reseau')" data-cat="reseau" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Réseaux</button>
-                        <button type="button" onclick="filtrerCat(this,'ia')" data-cat="ia" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">IA</button>
-                        <button type="button" onclick="filtrerCat(this,'securite')" data-cat="securite" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Sécurité</button>
-                        <button type="button" onclick="filtrerCat(this,'math')" data-cat="math" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Maths</button>
-                        <button type="button" onclick="filtrerCat(this,'autre')" data-cat="autre" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Autre</button>
-                    </div>
-
-                    <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                        {% for matiere in matieres %}
-                        <label class="matiere-tag" data-cat="{{ matiere.categorie }}"
-                               style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;border:1.5px solid var(--gray-200);background:var(--white);font-size:0.8rem;font-weight:500;color:var(--gray-800);cursor:pointer;transition:all 0.2s ease;">
-                            <input type="checkbox" name="matieres" value="{{ matiere.id }}"
-                                   style="display:none;" onchange="toggleTag(this)">
-                            {{ matiere.nom }}
-                        </label>
-                        {% empty %}
-                        <p style="color:var(--gray-600);font-size:0.85rem;">Aucune matière disponible.</p>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="form-group" style="margin-top:16px;">
-                    <label class="form-label">Compétences supplémentaires (optionnel)</label>
-                    <input type="text" name="competences" class="form-control"
-                           placeholder="Ex: Rigueur, Pédagogie">
-                </div>
-
-                {% if form.errors %}
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-circle"></i>
-                    Vérifie les champs et réessaie.
-                </div>
-                {% endif %}
-
-                <div style="display:flex;gap:10px;margin-top:16px;">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-paper-plane"></i> Publier l'offre
-                    </button>
-                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Annuler</a>
-                </div>
-            </form>
-        </div>
+        <h3 style="margin-bottom:20px;">Créer une offre de mentorat</h3>
+        <form method="post">
+            {% csrf_token %}
+            <label>Titre de l'offre</label>
+            <input type="text" name="titre" class="form-control" placeholder="Ex: Aide en Python" required>
+            <label>Description</label>
+            <textarea name="description" class="form-control" rows="4" placeholder="Décris ce que tu peux apporter..." required></textarea>
+            <label>Matières que tu peux enseigner</label>
+            <div style="border:1px solid #ccc; border-radius:4px; padding:10px; margin-bottom:12px;">
+                {% for matiere in matieres %}
+                <label style="display:inline-block; margin:5px 10px 5px 0;">
+                    <input type="checkbox" name="matieres" value="{{ matiere.id }}">
+                    {{ matiere.nom }}
+                </label>
+                {% empty %}
+                <p style="color:#666;">Aucune matière disponible.</p>
+                {% endfor %}
+            </div>
+            <label>Compétences supplémentaires (optionnel)</label>
+            <input type="text" name="competences" class="form-control" placeholder="Ex: Rigueur, Pédagogie">
+            {% if form.errors %}
+            <div class="alert alert-danger">Vérifie les champs et réessaie.</div>
+            {% endif %}
+            <div style="margin-top:15px;">
+                <button type="submit" class="btn btn-primary">Publier l'offre</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="margin-left:10px;">Annuler</a>
+            </div>
+        </form>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-function toggleTag(input) {
-    const label = input.closest('.matiere-tag');
-    if (input.checked) {
-        label.style.background = 'var(--accent)';
-        label.style.color = 'white';
-        label.style.borderColor = 'var(--accent)';
-    } else {
-        label.style.background = 'var(--white)';
-        label.style.color = 'var(--gray-800)';
-        label.style.borderColor = 'var(--gray-200)';
-    }
-}
-
-function filtrerCat(btn, cat) {
-    document.querySelectorAll('[data-cat]').forEach(b => {
-        if (b.tagName === 'BUTTON') {
-            b.style.background = 'transparent';
-            b.style.color = 'var(--gray-600)';
-            b.style.borderColor = 'var(--gray-200)';
-        }
-    });
-    btn.style.background = 'var(--accent)';
-    btn.style.color = 'white';
-    btn.style.borderColor = 'var(--accent)';
-
-    document.querySelectorAll('.matiere-tag').forEach(tag => {
-        tag.style.display = (cat === 'all' || tag.dataset.cat === cat) ? 'inline-flex' : 'none';
-    });
-}
-</script>
 {% endblock %}

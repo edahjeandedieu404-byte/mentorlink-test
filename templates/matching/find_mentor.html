@@ -1,135 +1,29 @@
 {% extends "base.html" %}
-{% block title %}Trouver un mentor{% endblock %}
-{% block page_title %}Résultats de matching{% endblock %}
+{% block title %}Trouver un mentor - MentorLink{% endblock %}
 
 {% block content %}
-
-<div style="margin-bottom:24px;">
-    <h2 style="font-family:var(--font-heading);font-size:1.2rem;font-weight:700;color:var(--gray-800);">
-        {{ demande.titre }}
-    </h2>
-    <p style="color:var(--gray-600);font-size:0.85rem;margin-top:6px;">
-        Matières recherchées :
-        {% for matiere in demande.matieres.all %}
-        <span class="badge badge-primary" style="margin-right:4px;">{{ matiere.nom }}</span>
-        {% empty %}
-        <span style="color:var(--gray-600);">Aucune matière sélectionnée</span>
-        {% endfor %}
-    </p>
-</div>
-
-{% if resultats %}
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;">
-    {% for r in resultats %}
-    <div class="mentor-card">
-        <div class="mentor-card-header">
-            <div class="avatar-placeholder avatar-md" style="font-size:0.85rem;">
-                {{ r.mentor.prenom|first|upper }}{{ r.mentor.nom|first|upper }}
-            </div>
-            <div class="mentor-card-info">
-                <h4>{{ r.mentor.get_full_name }}</h4>
-                <p>{{ r.mentor.get_filiere_display }} — {{ r.mentor.get_niveau_display }}</p>
-            </div>
-            <!-- Score global -->
-            <div class="score-ring" style="margin-left:auto;">
-                <svg width="56" height="56">
-                    <circle cx="28" cy="28" r="22"
-                            fill="none" stroke="var(--gray-200)" stroke-width="4"/>
-                    <circle cx="28" cy="28" r="22"
-                            fill="none" stroke="var(--accent)" stroke-width="4"
-                            stroke-linecap="round"
-                            class="progress"
-                            data-score="{{ r.score }}"/>
-                </svg>
-                <span class="score-text" style="font-size:0.75rem;">{{ r.score }}%</span>
-            </div>
-        </div>
-
-        <!-- Détail des scores -->
-        <div style="background:var(--gray-100);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
-                <span style="color:var(--gray-600);">
-                    <i class="fas fa-book" style="margin-right:4px;color:var(--accent);"></i>
-                    Matières
-                </span>
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <div style="width:80px;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;">
-                        <div style="width:{{ r.score_matieres }}%;height:100%;background:var(--accent);border-radius:3px;"></div>
-                    </div>
-                    <span style="font-weight:700;color:var(--gray-800);min-width:35px;">{{ r.score_matieres }}%</span>
-                </div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
-                <span style="color:var(--gray-600);">
-                    <i class="fas fa-graduation-cap" style="margin-right:4px;color:var(--success);"></i>
-                    Filière
-                </span>
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <div style="width:80px;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;">
-                        <div style="width:{{ r.score_filiere }}%;height:100%;background:var(--success);border-radius:3px;"></div>
-                    </div>
-                    <span style="font-weight:700;color:var(--gray-800);min-width:35px;">{{ r.score_filiere }}%</span>
-                </div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
-                <span style="color:var(--gray-600);">
-                    <i class="fas fa-layer-group" style="margin-right:4px;color:var(--warning);"></i>
-                    Niveau
-                </span>
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <div style="width:80px;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;">
-                        <div style="width:{{ r.score_niveau }}%;height:100%;background:var(--warning);border-radius:3px;"></div>
-                    </div>
-                    <span style="font-weight:700;color:var(--gray-800);min-width:35px;">{{ r.score_niveau }}%</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Matières du mentor -->
-        <div>
-            <div style="font-size:0.72rem;color:var(--gray-600);margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">
-                Matières enseignées
-            </div>
-            <div class="mentor-card-skills">
-                {% for matiere in r.offre.matieres.all %}
-                <span class="skill-tag">{{ matiere.nom }}</span>
-                {% empty %}
-                <span style="font-size:0.78rem;color:var(--gray-600);">Non renseigné</span>
+<div style="max-width:700px; margin:0 auto;">
+    <div class="card">
+        <h3 style="margin-bottom:20px;">Trouver un mentor</h3>
+        <form method="post">
+            {% csrf_token %}
+            <label>Sélectionne ta demande</label>
+            <select name="demande_id" class="form-control" required>
+                <option value="">-- Choisir une demande --</option>
+                {% for demande in demandes %}
+                <option value="{{ demande.id }}">{{ demande.titre }}</option>
                 {% endfor %}
+            </select>
+            {% if not demandes %}
+            <p style="color:#666;">Tu n'as pas encore de demande. 
+                <a href="{% url 'creer_demande' %}">Créer une demande</a>
+            </p>
+            {% endif %}
+            <div style="margin-top:15px;">
+                <button type="submit" class="btn btn-primary">Lancer le matching</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="margin-left:10px;">Annuler</a>
             </div>
-        </div>
-
-        {% if r.mentor.disponibilites %}
-        <div style="font-size:0.82rem;color:var(--gray-800);">
-            <i class="fas fa-clock" style="color:var(--warning);margin-right:4px;"></i>
-            {{ r.mentor.disponibilites }}
-        </div>
-        {% endif %}
-
-        <a href="{% url 'accepter_match' demande.id r.offre.id %}"
-           class="btn btn-primary" style="justify-content:center;">
-            <i class="fas fa-handshake"></i>
-            Accepter ce mentor
-        </a>
-    </div>
-    {% endfor %}
-</div>
-
-{% else %}
-<div class="card">
-    <div class="card-body" style="text-align:center;padding:48px;">
-        <i class="fas fa-search fa-3x" style="color:var(--gray-400);margin-bottom:16px;"></i>
-        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--gray-800);margin-bottom:8px;">
-            Aucun mentor compatible
-        </h3>
-        <p style="font-size:0.85rem;color:var(--gray-600);">
-            Aucun mentor ne correspond aux matières recherchées pour l'instant.
-        </p>
-        <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="margin-top:16px;">
-            <i class="fas fa-arrow-left"></i> Retour
-        </a>
+        </form>
     </div>
 </div>
-{% endif %}
-
 {% endblock %}
