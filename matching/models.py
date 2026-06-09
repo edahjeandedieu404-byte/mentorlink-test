@@ -3,22 +3,9 @@ from django.conf import settings
 
 
 class Matiere(models.Model):
-    CATEGORIES = [
-    ('info', 'Informatique générale'),
-    ('math', 'Mathématiques'),
-    ('reseau', 'Réseaux'),
-    ('bd', 'Bases de données'),
-    ('dev', 'Développement'),
-    ('ia', 'Intelligence Artificielle'),
-    ('securite', 'Sécurité'),
-    ('autre', 'Autre'),
-]
     nom = models.CharField(max_length=100, unique=True)
-    categorie = models.CharField(max_length=20, choices=CATEGORIES, default='autre')
-
     def __str__(self):
         return self.nom
-
     class Meta:
         ordering = ['nom']
 

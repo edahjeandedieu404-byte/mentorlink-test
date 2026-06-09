@@ -2,20 +2,20 @@
 from matching.models import Matiere
 
 matieres = [
-    ('Python', 'dev'),
-    ('Algorithme', 'info'),
-    ('Bases de Données', 'bd'),
-    ('SQL', 'bd'),
-    ('Développement Web', 'dev'),
-    ('HTML/CSS', 'dev'),
-    ('Java', 'dev'),
-    ('Mathématique', 'math'),
-    ('Réseau', 'reseau'),
-    ('Anglais', 'autre'),
-    ('Language C', 'dev'),
+    'Python',
+    'Algorithme',
+    'Bases de Données',
+    'SQL',
+    'Développement Web',
+    'HTML/CSS',
+    'Java',
+    'Mathématique',
+    'Réseau',
+    'Anglais',
+    'Language C',
 ]
 
-for nom, cat in matieres:
-    Matiere.objects.get_or_create(nom=nom, defaults={'categorie': cat})
+for nom in matieres:
+    Matiere.objects.get_or_create(nom=nom)
 
 print(f"{Matiere.objects.count()} matières en base.")
