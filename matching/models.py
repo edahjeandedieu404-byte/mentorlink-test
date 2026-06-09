@@ -95,6 +95,7 @@ class HistoriqueMatching(models.Model):
     score_matieres = models.FloatField(default=0)
     score_filiere = models.FloatField(default=0)
     score_niveau = models.FloatField(default=0)
+    score_dispos = models.FloatField(default=0)
     date_creation = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

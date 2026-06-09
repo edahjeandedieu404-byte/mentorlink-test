@@ -77,6 +77,7 @@ def accepter_match(request, demande_id, offre_id):
             score_matieres=scores['score_matieres'],
             score_filiere=scores['score_filiere'],
             score_niveau=scores['score_niveau'],
+            score_dispos=scores['score_dispos'],
         )
 
     return redirect('my_mentors')
@@ -95,7 +96,7 @@ def creer_offre(request):
     else:
         form = OffreMentoratForm()
 
-    matieres = Matiere.objects.all().order_by('categorie', 'nom')
+    matieres = Matiere.objects.all().order_by('nom')
     return render(request, 'matching/creer_offre.html', {
         'form': form,
         'matieres': matieres
@@ -115,7 +116,7 @@ def creer_demande(request):
     else:
         form = DemandeMentoratForm()
 
-    matieres = Matiere.objects.all().order_by('categorie', 'nom')
+    matieres = Matiere.objects.all().order_by('nom')
     return render(request, 'matching/creer_demande.html', {
         'form': form,
         'matieres': matieres

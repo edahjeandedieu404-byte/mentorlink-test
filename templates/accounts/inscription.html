@@ -7,14 +7,13 @@
     <title>Inscription — MentorLink</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <style>
         body { display: flex; min-height: 100vh; margin: 0; background: #f5f0e8; }
 
         .auth-left {
             width: 420px;
-            background: #1e3a5f;
+            background: #1a3d2b;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -62,7 +61,7 @@
             margin-bottom: 12px;
         }
 
-        .auth-left-logo span { color: #2563eb; }
+        .auth-left-logo span { color: #1a6b45; }
 
         .auth-left-desc {
             color: rgba(255,255,255,0.6);
@@ -90,7 +89,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #2563eb;
+            color: #1a6b45;
             flex-shrink: 0;
         }
 
@@ -138,17 +137,17 @@
             font-family: 'Sora', sans-serif;
             font-size: 1.4rem;
             font-weight: 800;
-            color: #1e3a5f;
+            color: #1a3d2b;
             margin-bottom: 4px;
         }
 
-        .auth-form-logo span { color: #2563eb; }
+        .auth-form-logo span { color: #1a6b45; }
 
         .auth-form-title {
             font-family: 'Sora', sans-serif;
             font-size: 1.2rem;
             font-weight: 700;
-            color: #1e3a5f;
+            color: #1a3d2b;
             margin-bottom: 4px;
             margin-top: 20px;
         }
@@ -185,28 +184,28 @@
 
         <div class="auth-feature">
             <div class="auth-feature-icon">
-                <i class="fas fa-brain"></i>
+                
             </div>
             <div class="auth-feature-text">Matching intelligent par compétences et filière</div>
         </div>
 
         <div class="auth-feature">
             <div class="auth-feature-icon">
-                <i class="fas fa-comments"></i>
+                
             </div>
             <div class="auth-feature-text">Messagerie intégrée avec ton mentor</div>
         </div>
 
         <div class="auth-feature">
             <div class="auth-feature-icon">
-                <i class="fas fa-chart-line"></i>
+                
             </div>
             <div class="auth-feature-text">Suis ta progression académique</div>
         </div>
 
         <div class="auth-feature">
             <div class="auth-feature-icon">
-                <i class="fas fa-users"></i>
+                
             </div>
             <div class="auth-feature-text">Communauté IA, GL, IM, SI, SE&IoT</div>
         </div>
@@ -237,7 +236,7 @@
 
         {% if form.errors %}
         <div class="alert alert-danger">
-            <i class="fas fa-exclamation-circle"></i>
+            
             Vérifie les champs et réessaie.
         </div>
         {% endif %}
@@ -324,15 +323,15 @@
             </div>
 
             <button type="submit" class="btn btn-primary"
-                    style="width:100%;justify-content:center;padding:12px;margin-top:8px;background:#2563eb;border-color:#2563eb;">
-                <i class="fas fa-user-plus"></i>
+                    style="width:100%;justify-content:center;padding:12px;margin-top:8px;background:#1a6b45;border-color:#1a6b45;">
+                
                 Créer mon compte
             </button>
         </form>
 
         <div style="text-align:center;font-size:0.85rem;color:#6c757d;margin-top:16px;">
             Déjà un compte ?
-            <a href="{% url 'connexion' %}" style="color:#2563eb;font-weight:600;">Se connecter</a>
+            <a href="{% url 'connexion' %}" style="color:#1a6b45;font-weight:600;">Se connecter</a>
         </div>
     </div>
 </div>

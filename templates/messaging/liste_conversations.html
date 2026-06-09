@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header">
             <span class="card-title">
-                <i class="fas fa-comments" style="color:var(--accent);"></i>
+                
                 Mes conversations
             </span>
         </div>
@@ -64,7 +64,7 @@
                                 onmouseover="this.style.color='var(--danger)';this.style.background='rgba(231,76,60,0.1)'"
                                 onmouseout="this.style.color='var(--gray-400)';this.style.background='none'"
                                 title="Supprimer la conversation">
-                            <i class="fas fa-trash-alt"></i>
+                            
                         </button>
                     </form>
  
@@ -72,7 +72,7 @@
                 {% endfor %}
             {% else %}
                 <div style="padding:48px;text-align:center;color:var(--gray-600);">
-                    <i class="fas fa-comments fa-3x" style="margin-bottom:16px;opacity:0.3;"></i>
+                    
                     <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--gray-800);margin-bottom:8px;">
                         Aucune conversation
                     </h3>
@@ -80,7 +80,7 @@
                         Accepte un mentor depuis le tableau de bord pour commencer à discuter !
                     </p>
                     <a href="{% url 'dashboard' %}" class="btn btn-primary" style="margin-top:16px;">
-                        <i class="fas fa-home"></i> Tableau de bord
+                         Tableau de bord
                     </a>
                 </div>
             {% endif %}

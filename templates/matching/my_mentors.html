@@ -6,7 +6,7 @@
 <div class="card">
     <div class="card-header">
         <span class="card-title">
-            <i class="fas fa-user-tie" style="color:var(--success);"></i>
+            
             Mes mentors
         </span>
     </div>
@@ -36,14 +36,14 @@
                     <span class="badge badge-success">{{ rel.statut }}</span>
                     <a href="{% url 'nouvelle_conversation' rel.mentor.id %}"
                        class="btn btn-sm btn-primary">
-                        <i class="fas fa-comments"></i> Message
+                         Message
                     </a>
                 </div>
             </div>
             {% endfor %}
         {% else %}
             <div style="padding:48px;text-align:center;color:var(--gray-600);">
-                <i class="fas fa-user-tie fa-3x" style="margin-bottom:16px;opacity:0.3;"></i>
+                
                 <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--gray-800);margin-bottom:8px;">
                     Aucun mentor associé
                 </h3>
@@ -51,7 +51,7 @@
                     Crée une demande et trouve ton mentor !
                 </p>
                 <a href="{% url 'creer_demande' %}" class="btn btn-primary" style="margin-top:16px;">
-                    <i class="fas fa-search"></i> Chercher un mentor
+                     Chercher un mentor
                 </a>
             </div>
         {% endif %}

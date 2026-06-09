@@ -49,7 +49,7 @@
         <div style="background:var(--gray-100);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;">
             <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
                 <span style="color:var(--gray-600);">
-                    <i class="fas fa-book" style="margin-right:4px;color:var(--accent);"></i>
+                    
                     Matières
                 </span>
                 <div style="display:flex;align-items:center;gap:8px;">
@@ -61,7 +61,7 @@
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
                 <span style="color:var(--gray-600);">
-                    <i class="fas fa-graduation-cap" style="margin-right:4px;color:var(--success);"></i>
+                    
                     Filière
                 </span>
                 <div style="display:flex;align-items:center;gap:8px;">
@@ -73,7 +73,7 @@
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
                 <span style="color:var(--gray-600);">
-                    <i class="fas fa-layer-group" style="margin-right:4px;color:var(--warning);"></i>
+                    
                     Niveau
                 </span>
                 <div style="display:flex;align-items:center;gap:8px;">
@@ -81,6 +81,15 @@
                         <div style="width:{{ r.score_niveau }}%;height:100%;background:var(--warning);border-radius:3px;"></div>
                     </div>
                     <span style="font-weight:700;color:var(--gray-800);min-width:35px;">{{ r.score_niveau }}%</span>
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
+                <span style="color:var(--gray-600);">Disponibilités</span>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <div style="width:80px;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;">
+                        <div style="width:{{ r.score_dispos }}%;height:100%;background:#a78bfa;border-radius:3px;"></div>
+                    </div>
+                    <span style="font-weight:700;color:var(--gray-800);min-width:35px;">{{ r.score_dispos }}%</span>
                 </div>
             </div>
         </div>
@@ -101,14 +110,14 @@
 
         {% if r.mentor.disponibilites %}
         <div style="font-size:0.82rem;color:var(--gray-800);">
-            <i class="fas fa-clock" style="color:var(--warning);margin-right:4px;"></i>
+            
             {{ r.mentor.disponibilites }}
         </div>
         {% endif %}
 
         <a href="{% url 'accepter_match' demande.id r.offre.id %}"
            class="btn btn-primary" style="justify-content:center;">
-            <i class="fas fa-handshake"></i>
+            
             Accepter ce mentor
         </a>
     </div>
@@ -118,7 +127,7 @@
 {% else %}
 <div class="card">
     <div class="card-body" style="text-align:center;padding:48px;">
-        <i class="fas fa-search fa-3x" style="color:var(--gray-400);margin-bottom:16px;"></i>
+        
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--gray-800);margin-bottom:8px;">
             Aucun mentor compatible
         </h3>
@@ -126,7 +135,7 @@
             Aucun mentor ne correspond aux matières recherchées pour l'instant.
         </p>
         <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="margin-top:16px;">
-            <i class="fas fa-arrow-left"></i> Retour
+             Retour
         </a>
     </div>
 </div>
