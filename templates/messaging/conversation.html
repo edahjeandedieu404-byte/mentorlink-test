@@ -1,46 +1,93 @@
 {% extends "base.html" %}
-{% block title %}Conversation - MentorLink{% endblock %}
+{% block title %}Conversation{% endblock %}
+{% block page_title %}Messages{% endblock %}
 
 {% block content %}
-<div style="max-width:700px; margin:0 auto;">
-    <div class="card">
-        <h5 style="margin-bottom:15px;">
-            {% for participant in conversation.participants.all %}
-                {% if participant != user %}
-                {{ participant.prenom }} {{ participant.nom }}
-                {% endif %}
-            {% endfor %}
-        </h5>
+<div class="chat-container">
 
-        <div style="border:1px solid #ddd; border-radius:4px; padding:15px; height:400px; overflow-y:auto; margin-bottom:15px;">
-            {% for message in messages %}
-            <div style="margin-bottom:15px; {% if message.auteur == user %}text-align:right;{% endif %}">
-                <div style="display:inline-block; max-width:70%; padding:8px 12px; border-radius:6px;
-                    {% if message.auteur == user %}
-                    background:#2c3e50; color:white;
-                    {% else %}
-                    background:#f4f4f4; color:#333;
-                    {% endif %}">
-                    {{ message.contenu }}
+    <!-- Sidebar conversations -->
+    <div class="chat-sidebar">
+        <div class="chat-sidebar-header">
+            <i class="fas fa-comments" style="color:var(--accent);margin-right:8px;"></i>
+            Conversations
+        </div>
+        <div style="overflow-y:auto;flex:1;">
+            {% for item in convs_data %}
+            <a href="{% url 'conversation' item.conv.id %}"
+               class="conv-item {% if item.conv.id == conversation.id %}active{% endif %}">
+                <div class="avatar-placeholder" style="width:40px;height:40px;border-radius:50%;font-size:0.78rem;flex-shrink:0;">
+                    {% if item.autre %}{{ item.autre.prenom|first|upper }}{{ item.autre.nom|first|upper }}{% else %}?{% endif %}
                 </div>
-                <div style="font-size:0.75rem; color:#999; margin-top:3px;">
-                    {{ message.date_envoi|date:"d/m/Y H:i" }}
+                <div class="conv-info">
+                    <div class="conv-name">
+                        {% if item.autre %}{{ item.autre.get_full_name }}{% else %}Conv. {{ item.conv.id }}{% endif %}
+                    </div>
+                    <div class="conv-preview">
+                        {% if item.dernier_message %}{{ item.dernier_message.contenu|truncatechars:35 }}{% endif %}
+                    </div>
                 </div>
-            </div>
-            {% empty %}
-            <p style="color:#666; text-align:center;">Aucun message. Commencez la conversation !</p>
+            </a>
             {% endfor %}
         </div>
-
-        <form method="post">
-            {% csrf_token %}
-            <div style="display:flex; gap:10px;">
-                <input type="text" name="contenu" class="form-control" placeholder="Écrire un message..." required style="margin-bottom:0;">
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-            </div>
-        </form>
     </div>
 
-    <a href="{% url 'liste_conversations' %}" class="btn btn-secondary" style="margin-top:10px;">Retour</a>
+    <!-- Zone de chat principale -->
+    <div class="chat-main">
+        <div class="chat-header">
+            <div class="avatar-placeholder" style="width:38px;height:38px;border-radius:50%;font-size:0.78rem;">
+                {% if autre %}{{ autre.prenom|first|upper }}{{ autre.nom|first|upper }}{% else %}?{% endif %}
+            </div>
+            <div>
+                <div style="font-weight:700;font-size:0.9rem;color:var(--gray-800);">
+                    {% if autre %}{{ autre.get_full_name }}{% else %}Conversation{% endif %}
+                </div>
+                {% if autre %}
+                <div style="font-size:0.72rem;color:var(--gray-600);">
+                    {{ autre.get_filiere_display }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="chat-messages" id="chat-messages">
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="message-bubble {% if msg.auteur == user %}sent{% else %}received{% endif %}">
+                    <div class="bubble">{{ msg.contenu }}</div>
+                    <div class="bubble-time">{{ msg.date_envoi|date:"H:i" }}</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="text-align:center;color:var(--gray-600);margin-top:60px;">
+                    <i class="fas fa-comments fa-3x" style="opacity:0.2;margin-bottom:12px;"></i>
+                    <p style="font-size:0.85rem;">Commencez la conversation !</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Input message -->
+        <div class="chat-input">
+            <form method="post" style="display:flex;gap:10px;width:100%;align-items:center;">
+                {% csrf_token %}
+                <input type="text" name="contenu"
+                       placeholder="Écrire un message..."
+                       autocomplete="off" autofocus required>
+                <button type="submit" class="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const chatMessages = document.getElementById('chat-messages');
+    if (chatMessages) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+</script>
 {% endblock %}

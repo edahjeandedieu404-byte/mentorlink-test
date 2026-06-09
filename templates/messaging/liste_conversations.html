@@ -1,35 +1,91 @@
 {% extends "base.html" %}
-{% block title %}Messages - MentorLink{% endblock %}
-
+{% block title %}Messages{% endblock %}
+{% block page_title %}Messages{% endblock %}
+ 
 {% block content %}
-<h3 style="margin-bottom:20px;">Mes conversations</h3>
-
-{% if conversations %}
-{% for conv in conversations %}
-<div class="card" style="cursor:pointer;" onclick="window.location='{% url 'conversation' conv.id %}'">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
-            {% for participant in conv.participants.all %}
-                {% if participant != user %}
-                <h5 style="margin:0;">{{ participant.prenom }} {{ participant.nom }}</h5>
-                <p style="color:#666; margin:5px 0;">{{ participant.get_filiere_display }}</p>
-                {% endif %}
-            {% endfor %}
-        </div>
-        <div style="text-align:right;">
-            {% if conv.nb_non_lus > 0 %}
-            <span style="background:#2c3e50; color:white; border-radius:50%; padding:3px 8px; font-size:0.8rem;">
-                {{ conv.nb_non_lus }}
+<div style="max-width:700px;margin:0 auto;">
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">
+                <i class="fas fa-comments" style="color:var(--accent);"></i>
+                Mes conversations
             </span>
+        </div>
+        <div class="card-body" style="padding:0;">
+            {% if convs_data %}
+                {% for item in convs_data %}
+                <div style="display:flex;align-items:center;border-bottom:1px solid var(--gray-200);">
+ 
+                    <!-- Lien vers la conversation -->
+                    <a href="{% url 'conversation' item.conv.id %}"
+                       style="display:flex;align-items:center;gap:14px;padding:16px 20px;flex:1;text-decoration:none;transition:var(--transition);"
+                       onmouseover="this.style.background='var(--gray-100)'"
+                       onmouseout="this.style.background='transparent'">
+ 
+                        <!-- Avatar -->
+                        <div style="position:relative;">
+                            <div class="avatar-placeholder avatar-md" style="font-size:0.85rem;border-radius:50%;">
+                                {% if item.autre %}
+                                    {{ item.autre.prenom|first|upper }}{{ item.autre.nom|first|upper }}
+                                {% else %}
+                                    ?
+                                {% endif %}
+                            </div>
+                            {% if item.non_lus and item.non_lus > 0 %}
+                            <span style="position:absolute;top:-3px;right:-3px;background:var(--highlight);color:white;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                                {{ item.non_lus }}
+                            </span>
+                            {% endif %}
+                        </div>
+ 
+                        <!-- Infos conversation -->
+                        <div style="flex:1;min-width:0;">
+                            <div style="font-weight:{% if item.non_lus and item.non_lus > 0 %}700{% else %}600{% endif %};font-size:0.88rem;color:var(--gray-800);">
+                                {% if item.autre %}{{ item.autre.get_full_name }}{% else %}Conversation {{ item.conv.id }}{% endif %}
+                            </div>
+                            <div style="font-size:0.75rem;color:{% if item.non_lus and item.non_lus > 0 %}var(--highlight){% else %}var(--gray-600){% endif %};margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                                {% if item.dernier_message %}{{ item.dernier_message.contenu|truncatechars:50 }}{% else %}Aucun message{% endif %}
+                            </div>
+                        </div>
+ 
+                        <!-- Date -->
+                        <div style="font-size:0.72rem;color:var(--gray-600);flex-shrink:0;">
+                            {{ item.conv.date_creation|date:"d/m/Y" }}
+                        </div>
+                    </a>
+ 
+                    <!-- Bouton supprimer -->
+                    <form method="post" action="{% url 'supprimer_conversation' item.conv.id %}"
+                          onsubmit="return confirm('Supprimer cette conversation définitivement ?')"
+                          style="padding:0 16px;">
+                        {% csrf_token %}
+                        <button type="submit"
+                                style="background:none;border:none;cursor:pointer;color:var(--gray-400);padding:8px;border-radius:8px;transition:var(--transition);"
+                                onmouseover="this.style.color='var(--danger)';this.style.background='rgba(231,76,60,0.1)'"
+                                onmouseout="this.style.color='var(--gray-400)';this.style.background='none'"
+                                title="Supprimer la conversation">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+ 
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="padding:48px;text-align:center;color:var(--gray-600);">
+                    <i class="fas fa-comments fa-3x" style="margin-bottom:16px;opacity:0.3;"></i>
+                    <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--gray-800);margin-bottom:8px;">
+                        Aucune conversation
+                    </h3>
+                    <p style="font-size:0.85rem;">
+                        Accepte un mentor depuis le tableau de bord pour commencer à discuter !
+                    </p>
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary" style="margin-top:16px;">
+                        <i class="fas fa-home"></i> Tableau de bord
+                    </a>
+                </div>
             {% endif %}
         </div>
     </div>
 </div>
-{% endfor %}
-{% else %}
-<div class="card">
-    <p style="color:#666;">Aucune conversation pour l'instant.</p>
-    <a href="{% url 'find_mentor' %}" class="btn btn-primary">Trouver un mentor</a>
-</div>
-{% endif %}
 {% endblock %}
+ 

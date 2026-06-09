@@ -1,47 +1,89 @@
 {% extends "base.html" %}
-{% block title %}Modifier mon profil - MentorLink{% endblock %}
+{% block title %}Modifier mon profil{% endblock %}
+{% block page_title %}Modifier mon profil{% endblock %}
 
 {% block content %}
-<div style="max-width:500px; margin:0 auto;">
+<div style="max-width:600px;margin:0 auto;">
     <div class="card">
-        <h3 style="margin-bottom:20px;">Modifier mon profil</h3>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <label>Téléphone</label>
-            <input type="text" name="telephone" class="form-control" value="{{ user.telephone }}">
-            <label>Filière</label>
-            <select name="filiere" class="form-control">
-                <option value="">-- Choisir --</option>
-                <option value="GL" {% if user.filiere == 'GL' %}selected{% endif %}>Génie Logiciel</option>
-                <option value="IA" {% if user.filiere == 'IA' %}selected{% endif %}>Intelligence Artificielle</option>
-                <option value="IM" {% if user.filiere == 'IM' %}selected{% endif %}>Internet et Multimédia</option>
-                <option value="SI" {% if user.filiere == 'SI' %}selected{% endif %}>Sécurité Informatique</option>
-                <option value="SE" {% if user.filiere == 'SE' %}selected{% endif %}>Systèmes Embarqués et IoT</option>
-            </select>
-            <label>Niveau</label>
-            <select name="niveau" class="form-control">
-                <option value="">-- Choisir --</option>
-                <option value="L1" {% if user.niveau == 'L1' %}selected{% endif %}>Licence 1</option>
-                <option value="L2" {% if user.niveau == 'L2' %}selected{% endif %}>Licence 2</option>
-                <option value="L3" {% if user.niveau == 'L3' %}selected{% endif %}>Licence 3</option>
-                <option value="M1" {% if user.niveau == 'M1' %}selected{% endif %}>Master 1</option>
-                <option value="M2" {% if user.niveau == 'M2' %}selected{% endif %}>Master 2</option>
-            </select>
-            <label>Compétences</label>
-            <textarea name="competences" class="form-control" rows="3">{{ user.competences }}</textarea>
-            <label>Lacunes</label>
-            <textarea name="lacunes" class="form-control" rows="3">{{ user.lacunes }}</textarea>
-            <label>Disponibilités</label>
-            <textarea name="disponibilites" class="form-control" rows="3">{{ user.disponibilites }}</textarea>
-            <label>Bio</label>
-            <textarea name="bio" class="form-control" rows="3">{{ user.bio }}</textarea>
-            <label>Photo de profil</label>
-            <input type="file" name="photo" class="form-control">
-            <div style="margin-top:15px;">
-                <button type="submit" class="btn btn-primary">Enregistrer</button>
-                <a href="{% url 'profil' %}" class="btn btn-secondary" style="margin-left:10px;">Annuler</a>
-            </div>
-        </form>
+        <div class="card-header">
+            <span class="card-title">
+                <i class="fas fa-edit" style="color:var(--accent);"></i>
+                Modifier mes informations
+            </span>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                    <div class="form-group">
+                        <label class="form-label">Nom</label>
+                        <input type="text" name="nom" class="form-control"
+                               value="{{ user.nom }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Prénom</label>
+                        <input type="text" name="prenom" class="form-control"
+                               value="{{ user.prenom }}" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Téléphone</label>
+                    <input type="text" name="telephone" class="form-control"
+                           value="{{ user.telephone }}">
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                    <div class="form-group">
+                        <label class="form-label">Filière</label>
+                        {{ form.filiere }}
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Niveau</label>
+                        {{ form.niveau }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Compétences</label>
+                    <input type="text" name="competences" class="form-control"
+                           value="{{ user.competences }}"
+                           placeholder="Ex: Python, Algorithmique">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Lacunes</label>
+                    <input type="text" name="lacunes" class="form-control"
+                           value="{{ user.lacunes }}"
+                           placeholder="Ex: Réseaux, Maths">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Disponibilités</label>
+                    <input type="text" name="disponibilites" class="form-control"
+                           value="{{ user.disponibilites }}"
+                           placeholder="Ex: Lundi 14h-16h">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Bio</label>
+                    <textarea name="bio" class="form-control" rows="3"
+                              placeholder="Parle de toi...">{{ user.bio }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Photo de profil</label>
+                    <input type="file" name="photo" class="form-control" accept="image/*">
+                </div>
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Erreur dans le formulaire.
+                </div>
+                {% endif %}
+                <div style="display:flex;gap:10px;margin-top:8px;">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Sauvegarder
+                    </button>
+                    <a href="{% url 'profil' %}" class="btn btn-secondary">
+                        Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -1,46 +1,96 @@
 {% extends "base.html" %}
-{% block title %}Mon profil - MentorLink{% endblock %}
+{% block title %}Mon Profil{% endblock %}
+{% block page_title %}Mon Profil{% endblock %}
 
 {% block content %}
-<div style="max-width:600px; margin:0 auto;">
+<div style="max-width:700px;margin:0 auto;">
     <div class="card">
-        <h3 style="margin-bottom:20px;">Mon profil</h3>
-        <table style="width:100%; border-collapse:collapse;">
-            <tr style="border-bottom:1px solid #eee;">
-                <td style="padding:10px; color:#666; width:40%;">Nom complet</td>
-                <td style="padding:10px;">{{ user.prenom }} {{ user.nom }}</td>
-            </tr>
-            <tr style="border-bottom:1px solid #eee;">
-                <td style="padding:10px; color:#666;">Email</td>
-                <td style="padding:10px;">{{ user.email }}</td>
-            </tr>
-            <tr style="border-bottom:1px solid #eee;">
-                <td style="padding:10px; color:#666;">Téléphone</td>
-                <td style="padding:10px;">{{ user.telephone }}</td>
-            </tr>
-            <tr style="border-bottom:1px solid #eee;">
-                <td style="padding:10px; color:#666;">Filière</td>
-                <td style="padding:10px;">{{ user.get_filiere_display }}</td>
-            </tr>
-            <tr style="border-bottom:1px solid #eee;">
-                <td style="padding:10px; color:#666;">Niveau</td>
-                <td style="padding:10px;">{{ user.get_niveau_display }}</td>
-            </tr>
-            <tr style="border-bottom:1px solid #eee;">
-                <td style="padding:10px; color:#666;">Compétences</td>
-                <td style="padding:10px;">{{ user.competences|default:"Non renseigné" }}</td>
-            </tr>
-            <tr style="border-bottom:1px solid #eee;">
-                <td style="padding:10px; color:#666;">Lacunes</td>
-                <td style="padding:10px;">{{ user.lacunes|default:"Non renseigné" }}</td>
-            </tr>
-            <tr>
-                <td style="padding:10px; color:#666;">Bio</td>
-                <td style="padding:10px;">{{ user.bio|default:"Non renseigné" }}</td>
-            </tr>
-        </table>
-        <div style="margin-top:20px;">
-            <a href="{% url 'modifier_profil' %}" class="btn btn-primary">Modifier le profil</a>
+        <div class="card-body">
+            <div style="display:flex;align-items:center;gap:24px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--gray-200);">
+                <div class="avatar-placeholder" style="width:90px;height:90px;font-size:1.8rem;border-radius:20px;">
+                    {% if user.photo %}
+                        <img src="{{ user.photo.url }}" style="width:90px;height:90px;border-radius:20px;object-fit:cover;">
+                    {% else %}
+                        {{ user.prenom|first|upper }}{{ user.nom|first|upper }}
+                    {% endif %}
+                </div>
+                <div>
+                    <h2 style="font-family:var(--font-heading);font-size:1.4rem;font-weight:800;color:var(--gray-800);">
+                        {{ user.get_full_name }}
+                    </h2>
+                    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                        <span class="badge badge-primary">{{ user.get_filiere_display }}</span>
+                        <span class="badge badge-gray">{{ user.get_niveau_display }}</span>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <a href="{% url 'modifier_profil' %}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-edit"></i> Modifier
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                <div>
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);margin-bottom:6px;">
+                        Email
+                    </div>
+                    <div style="font-size:0.88rem;color:var(--gray-800);">{{ user.email }}</div>
+                </div>
+                <div>
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);margin-bottom:6px;">
+                        Téléphone
+                    </div>
+                    <div style="font-size:0.88rem;color:var(--gray-800);">{{ user.telephone|default:"Non renseigné" }}</div>
+                </div>
+                <div>
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);margin-bottom:6px;">
+                        Compétences
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:5px;">
+                        {% if user.competences %}
+                            {% for skill in user.competences.split %}
+                            <span class="skill-tag">{{ skill }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span style="font-size:0.85rem;color:var(--gray-600);">Non renseigné</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);margin-bottom:6px;">
+                        Lacunes
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:5px;">
+                        {% if user.lacunes %}
+                            {% for lacune in user.lacunes.split %}
+                            <span class="skill-tag" style="border-color:var(--highlight);color:var(--highlight);">{{ lacune }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span style="font-size:0.85rem;color:var(--gray-600);">Non renseigné</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div style="grid-column:1/-1;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);margin-bottom:6px;">
+                        Disponibilités
+                    </div>
+                    <div style="font-size:0.85rem;color:var(--gray-800);">
+                        <i class="fas fa-clock" style="color:var(--warning);margin-right:6px;"></i>
+                        {{ user.disponibilites|default:"Non renseigné" }}
+                    </div>
+                </div>
+                {% if user.bio %}
+                <div style="grid-column:1/-1;">
+                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);margin-bottom:6px;">
+                        Bio
+                    </div>
+                    <div style="font-size:0.85rem;color:var(--gray-800);line-height:1.6;">
+                        {{ user.bio }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

@@ -1,32 +1,75 @@
 {% extends "base.html" %}
-{% block title %}Résultats du matching - MentorLink{% endblock %}
+{% block title %}Historique matching{% endblock %}
+{% block page_title %}Historique des matchings{% endblock %}
 
 {% block content %}
-<h3 style="margin-bottom:20px;">Mentors recommandés</h3>
-
-{% if resultats %}
-{% for r in resultats %}
 <div class="card">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
-            <h5 style="margin:0;">{{ r.mentor.prenom }} {{ r.mentor.nom }}</h5>
-            <p style="color:#666; margin:5px 0;">{{ r.mentor.get_filiere_display }} - {{ r.mentor.get_niveau_display }}</p>
-            <p style="margin:5px 0;">Compétences : {{ r.mentor.competences|default:"Non renseigné" }}</p>
-        </div>
-        <div style="text-align:center;">
-            <h4 style="color:#2c3e50; margin:0;">{{ r.score }}%</h4>
-            <p style="color:#666; margin:5px 0;">Compatibilité</p>
-            <a href="{% url 'nouvelle_conversation' r.mentor.id %}" class="btn btn-primary">Contacter</a>
-        </div>
+    <div class="card-header">
+        <span class="card-title">
+            <i class="fas fa-chart-bar" style="color:var(--accent);"></i>
+            Historique des matchings
+        </span>
+    </div>
+    <div class="card-body" style="padding:0;">
+        {% if historiques %}
+        <table style="width:100%;border-collapse:collapse;">
+            <thead>
+                <tr style="background:var(--gray-100);">
+                    <th style="padding:12px 20px;text-align:left;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);">Mentor</th>
+                    <th style="padding:12px 20px;text-align:left;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);">Mentoré</th>
+                    <th style="padding:12px 20px;text-align:center;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);">Score</th>
+                    <th style="padding:12px 20px;text-align:right;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-600);">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for h in historiques %}
+                <tr style="border-bottom:1px solid var(--gray-200);">
+                    <td style="padding:14px 20px;">
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div class="avatar-placeholder" style="width:34px;height:34px;border-radius:50%;font-size:0.72rem;">
+                                {{ h.mentor.prenom|first|upper }}{{ h.mentor.nom|first|upper }}
+                            </div>
+                            <div>
+                                <div style="font-weight:600;font-size:0.85rem;">{{ h.mentor.get_full_name }}</div>
+                                <div style="font-size:0.72rem;color:var(--gray-600);">{{ h.mentor.get_filiere_display }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding:14px 20px;">
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div class="avatar-placeholder" style="width:34px;height:34px;border-radius:50%;font-size:0.72rem;">
+                                {{ h.mentore.prenom|first|upper }}{{ h.mentore.nom|first|upper }}
+                            </div>
+                            <div>
+                                <div style="font-weight:600;font-size:0.85rem;">{{ h.mentore.get_full_name }}</div>
+                                <div style="font-size:0.72rem;color:var(--gray-600);">{{ h.mentore.get_filiere_display }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding:14px 20px;text-align:center;">
+                        <span class="badge {% if h.score >= 75 %}badge-success{% elif h.score >= 50 %}badge-primary{% else %}badge-gray{% endif %}"
+                              style="font-size:0.82rem;padding:5px 12px;">
+                            {{ h.score }}%
+                        </span>
+                    </td>
+                    <td style="padding:14px 20px;text-align:right;font-size:0.78rem;color:var(--gray-600);">
+                        {{ h.date_creation|date:"d/m/Y H:i" }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <div style="padding:48px;text-align:center;color:var(--gray-600);">
+                <i class="fas fa-chart-bar fa-3x" style="margin-bottom:16px;opacity:0.3;"></i>
+                <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--gray-800);margin-bottom:8px;">
+                    Aucun matching effectué
+                </h3>
+                <p style="font-size:0.85rem;">
+                    Les résultats apparaîtront ici après les premiers matchings.
+                </p>
+            </div>
+        {% endif %}
     </div>
 </div>
-{% endfor %}
-{% else %}
-<div class="card">
-    <p style="color:#666;">Aucun mentor trouvé pour cette demande.</p>
-    <a href="{% url 'creer_offre' %}" class="btn btn-secondary">Créer une offre à la place</a>
-</div>
-{% endif %}
-
-<a href="{% url 'dashboard' %}" class="btn btn-secondary" style="margin-top:10px;">Retour au tableau de bord</a>
 {% endblock %}
