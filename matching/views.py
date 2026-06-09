@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import DemandeMentorat, RelationMentorat, OffreMentorat, HistoriqueMatching
-from .algorithme import trouver_mentors, calculer_score
+from .models import DemandeMentorat, RelationMentorat, OffreMentorat, HistoriqueMatching, Matiere
+from .algorithme import trouver_mentors, calculer_score_global
 from .forms import OffreMentoratForm, DemandeMentoratForm
 
 
@@ -11,7 +11,6 @@ def dashboard(request):
     mes_demandes = DemandeMentorat.objects.filter(mentore=request.user)
     mes_mentors = RelationMentorat.objects.filter(mentore=request.user)
     mes_mentores = RelationMentorat.objects.filter(mentor=request.user)
-
     return render(request, 'matching/dashboard.html', {
         'mes_offres': mes_offres,
         'mes_demandes': mes_demandes,
@@ -70,14 +69,14 @@ def accepter_match(request, demande_id, offre_id):
             mentore=demande.mentore,
             statut='actif'
         )
-        vrai_score = calculer_score(
-            offre.competences,
-            demande.competences_recherchees
-        )
+        scores = calculer_score_global(offre, demande)
         HistoriqueMatching.objects.create(
             mentor=offre.mentor,
             mentore=demande.mentore,
-            score=vrai_score
+            score=scores['score'],
+            score_matieres=scores['score_matieres'],
+            score_filiere=scores['score_filiere'],
+            score_niveau=scores['score_niveau'],
         )
 
     return redirect('my_mentors')
@@ -91,10 +90,16 @@ def creer_offre(request):
             offre = form.save(commit=False)
             offre.mentor = request.user
             offre.save()
+            form.save_m2m()
             return redirect('dashboard')
     else:
         form = OffreMentoratForm()
-    return render(request, 'matching/creer_offre.html', {'form': form})
+
+    matieres = Matiere.objects.all().order_by('categorie', 'nom')
+    return render(request, 'matching/creer_offre.html', {
+        'form': form,
+        'matieres': matieres
+    })
 
 
 @login_required
@@ -105,7 +110,13 @@ def creer_demande(request):
             demande = form.save(commit=False)
             demande.mentore = request.user
             demande.save()
+            form.save_m2m()
             return redirect('dashboard')
     else:
         form = DemandeMentoratForm()
-    return render(request, 'matching/creer_demande.html', {'form': form})
+
+    matieres = Matiere.objects.all().order_by('categorie', 'nom')
+    return render(request, 'matching/creer_demande.html', {
+        'form': form,
+        'matieres': matieres
+    })
