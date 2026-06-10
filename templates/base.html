@@ -29,54 +29,56 @@
             <span>Mentor<em>Link</em></span>
         </div>
 
-        <nav class="sidebar-nav">
-            <span class="nav-section-title">Principal</span>
+     <nav class="sidebar-nav">
+    <span class="nav-section-title">Principal</span>
 
-            <a href="{% url 'dashboard' %}" class="nav-item">
-                Tableau de bord
-            </a>
+    <a href="{% url 'dashboard' %}" class="nav-item">
+        Tableau de bord
+    </a>
 
-            <a href="{% url 'creer_offre' %}" class="nav-item">
-                Offrir mentorat
-            </a>
+    <a href="{% url 'creer_offre' %}" class="nav-item">
+        Offrir mentorat
+    </a>
 
-            <a href="{% url 'creer_demande' %}" class="nav-item">
-                Chercher mentor
-            </a>
+    <a href="{% url 'creer_demande' %}" class="nav-item">
+        Chercher mentor
+    </a>
 
-            <span class="nav-section-title">Mes relations</span>
+    <span class="nav-section-title">Mes relations</span>
 
-            <a href="{% url 'my_mentors' %}" class="nav-item">
-                Mes mentors
-            </a>
+    <a href="{% url 'my_mentors' %}" class="nav-item">
+        Mes mentors
+    </a>
 
-            <a href="{% url 'my_mentees' %}" class="nav-item">
-                Mes mentorés
-            </a>
+    <a href="{% url 'my_mentees' %}" class="nav-item">
+        Mes mentorés
+    </a>
 
-            <a href="{% url 'matching_results' %}" class="nav-item">
-                Historique matching
-            </a>
+    <a href="{% url 'matching_results' %}" class="nav-item">
+        Historique matching
+    </a>
 
-            <span class="nav-section-title">Communication</span>
+    <span class="nav-section-title">Communication</span>
 
-            <a href="{% url 'liste_conversations' %}" class="nav-item">
-                Messages
-                {% if non_lus_total and non_lus_total > 0 %}
-                <span class="nav-badge">{{ non_lus_total }}</span>
-                {% endif %}
-            </a>
+    <a href="{% url 'liste_conversations' %}" class="nav-item">
+        Messages
+        {% if non_lus_total and non_lus_total > 0 %}
+        <span class="nav-badge">{{ non_lus_total }}</span>
+        {% endif %}
+    </a>
 
-            <span class="nav-section-title">Compte</span>
+    <span class="nav-section-title">Compte</span>
 
-            <a href="{% url 'profil' %}" class="nav-item">
-                Mon profil
-            </a>
+    <a href="{% url 'profil' %}" class="nav-item">
+        Mon profil
+    </a>
 
-            <a href="{% url 'deconnexion' %}" class="nav-item">
-                Déconnexion
-            </a>
-        </nav>
+    <a href="{% url 'deconnexion' %}" class="nav-item">
+        Déconnexion
+    </a>
+
+    
+</nav>
 
         <div class="sidebar-footer">
             <a href="{% url 'profil' %}" class="sidebar-user">
@@ -101,7 +103,11 @@
         <header class="topbar">
             <button class="sidebar-toggle">&#9776;</button>
             <h1 class="topbar-title">{% block page_title %}MentorLink{% endblock %}</h1>
-            <div class="topbar-actions"></div>
+  <div class="topbar-actions">
+    <a href="{% url 'aide' %}" style="font-size:0.82rem; color:white; text-decoration:none; padding:6px 12px; border-radius:6px; background:var(--accent);">
+        Guide d'utilisation
+    </a>
+</div>
         </header>
 
         <!-- ALERTS -->

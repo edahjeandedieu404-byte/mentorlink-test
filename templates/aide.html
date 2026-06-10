@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide d'utilisation — MentorLink</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'DM Sans', sans-serif; background:#f5f0eb; color:#1a1a1a; }
+
+        /* NAVBAR */
+        nav {
+            display:flex; justify-content:space-between; align-items:center;
+            padding:18px 60px; background:#f5f0eb; border-bottom:1px solid #e8e2da;
+            position:sticky; top:0; z-index:100;
+        }
+        .nav-logo { font-family:'Sora',sans-serif; font-weight:800; font-size:1.2rem; color:#1a1a1a; text-decoration:none; }
+        .nav-logo span { color:#2d6a4f; }
+        .nav-links { display:flex; gap:12px; }
+        .btn-outline { padding:9px 20px; border:1.5px solid #1a1a1a; border-radius:8px; background:transparent; color:#1a1a1a; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:600; cursor:pointer; text-decoration:none; }
+        .btn-green { padding:9px 20px; border:none; border-radius:8px; background:#2d6a4f; color:white; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:600; cursor:pointer; text-decoration:none; }
+        .btn-green:hover { background:#245a41; }
+
+        /* HERO */
+        .hero { text-align:center; padding:70px 60px 50px; }
+        .hero h1 { font-family:'Sora',sans-serif; font-size:2.8rem; font-weight:800; line-height:1.2; margin-bottom:16px; }
+        .hero h1 span { color:#2d6a4f; }
+        .hero p { color:#555; font-size:1.05rem; max-width:550px; margin:0 auto; line-height:1.7; }
+
+        /* SECTIONS */
+        .section { padding:60px; max-width:900px; margin:0 auto; }
+        .section-title { font-family:'Sora',sans-serif; font-size:1.6rem; font-weight:700; margin-bottom:8px; }
+        .section-sub { color:#666; margin-bottom:35px; }
+
+        /* ÉTAPES */
+        .steps { display:flex; flex-direction:column; gap:20px; }
+        .step { display:flex; gap:20px; align-items:flex-start; background:white; border-radius:12px; padding:20px; border:1px solid #e8e2da; }
+        .step-num { min-width:40px; height:40px; background:#2d6a4f; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1rem; flex-shrink:0; }
+        .step-content strong { font-size:1rem; font-weight:700; display:block; margin-bottom:6px; }
+        .step-content p { color:#666; line-height:1.6; font-size:0.9rem; }
+
+        /* ALGORITHME */
+        .algo-section { background:#1a2e1a; border-radius:16px; padding:40px; margin:0 60px 60px; }
+        .algo-section .section-title { color:white; }
+        .algo-section .section-sub { color:#aaa; }
+        .algo-cards { display:flex; gap:15px; }
+        .algo-card { flex:1; background:#243324; border-radius:10px; padding:20px; }
+        .algo-card .poids { font-family:'Sora',sans-serif; font-size:2rem; font-weight:800; color:#5ecf94; }
+        .algo-card strong { display:block; color:white; margin:8px 0 6px; font-size:0.95rem; }
+        .algo-card p { color:#aaa; font-size:0.85rem; line-height:1.5; }
+
+        /* FAQ */
+        .faq { display:flex; flex-direction:column; gap:15px; }
+        .faq-item { background:white; border-radius:12px; padding:20px; border:1px solid #e8e2da; }
+        .faq-item strong { display:block; margin-bottom:8px; font-size:0.95rem; }
+        .faq-item p { color:#666; font-size:0.9rem; line-height:1.6; }
+
+        /* CTA */
+        .cta { background:#1a2e1a; text-align:center; padding:70px 60px; }
+        .cta h2 { font-family:'Sora',sans-serif; font-size:2rem; font-weight:800; color:white; margin-bottom:12px; }
+        .cta h2 span { color:#5ecf94; }
+        .cta p { color:#aaa; margin-bottom:30px; }
+        .cta-btns { display:flex; gap:12px; justify-content:center; }
+
+        /* FOOTER */
+        footer { text-align:center; padding:25px; color:#999; font-size:0.82rem; background:#f5f0eb; border-top:1px solid #e8e2da; }
+
+        /* DIVIDER */
+        .divider { height:1px; background:#e8e2da; margin:0 60px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="{% url 'home' %}" class="nav-logo">Mentor<span>Link</span></a>
+    <div class="nav-links">
+        <a href="{% url 'connexion' %}" class="btn-outline">Se connecter</a>
+        <a href="{% url 'inscription' %}" class="btn-green">S'inscrire</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>Comment utiliser<br><span>MentorLink ?</span></h1>
+    <p>Tout ce que tu dois savoir pour trouver ton mentor et progresser dans tes études à l'IFRI.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ÉTAPES -->
+<div class="section">
+    <div class="section-title">Comment ça marche ?</div>
+    <div class="section-sub">4 étapes simples pour trouver ton mentor</div>
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <strong>Inscris-toi</strong>
+                <p>Crée ton compte avec ton email, ta filière (GL, IA, IM, SI, SE) et ton niveau (L1 à M2). Plus ton profil est complet avec tes disponibilités, meilleur sera le matching.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <strong>Crée une offre ou une demande</strong>
+                <p>Tu peux aider ? → Va dans "Offrir mentorat" et coche les matières que tu maîtrises.<br>
+                Tu as besoin d'aide ? → Va dans "Chercher mentor" et coche les matières difficiles.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <strong>Lance le matching</strong>
+                <p>Depuis le tableau de bord, clique sur "Chercher mentor" sur ta demande. L'algorithme analyse tes matières, ta filière et ton niveau pour te proposer les mentors les plus compatibles.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <strong>Accepte un mentor et commence</strong>
+                <p>Choisis un mentor dans la liste et clique "Accepter ce mentor". Une relation est créée et tu peux lui envoyer un message directement depuis la plateforme.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ALGORITHME -->
+<div style="padding:60px 0;">
+    <div class="algo-section">
+        <div class="section-title">Comment fonctionne l'algorithme ?</div>
+        <div class="section-sub">Le score de compatibilité est calculé sur 3 critères</div>
+        <div class="algo-cards">
+    <div class="algo-card">
+        <div class="poids">40%</div>
+        <strong>Matières</strong>
+        <p>Plus le mentor couvre tes matières demandées, plus le score est élevé.</p>
+    </div>
+    <div class="algo-card">
+        <div class="poids">25%</div>
+        <strong>Filière</strong>
+        <p>Un mentor de la même filière comprend mieux ton cursus et tes besoins.</p>
+    </div>
+    <div class="algo-card">
+        <div class="poids">15%</div>
+        <strong>Niveau</strong>
+        <p>Un mentor 1 niveau au-dessus est idéal. Même niveau fonctionne aussi bien.</p>
+    </div>
+    <div class="algo-card">
+        <div class="poids">20%</div>
+        <strong>Disponibilités</strong>
+        <p>Les créneaux horaires en commun entre mentor et mentoré améliorent le score.</p>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<div class="section">
+    <div class="section-title">Questions fréquentes</div>
+    <div class="section-sub">Les réponses aux questions les plus posées</div>
+    <div class="faq">
+        <div class="faq-item">
+            <strong>Puis-je être mentor ET mentoré en même temps ?</strong>
+            <p>Oui ! Tu peux créer une offre (pour aider d'autres étudiants) et une demande (pour être aidé) simultanément.</p>
+        </div>
+        <div class="faq-item">
+            <strong>Est-ce que MentorLink est gratuit ?</strong>
+            <p>Oui, la plateforme est entièrement gratuite pour tous les étudiants de l'IFRI.</p>
+        </div>
+        <div class="faq-item">
+            <strong>Comment améliorer mon score de matching ?</strong>
+            <p>Complète bien ton profil : filière, niveau et disponibilités. Coche précisément les matières concernées dans ta demande.</p>
+        </div>
+        <div class="faq-item">
+            <strong>Que faire si aucun mentor n'est trouvé ?</strong>
+            <p>Cela signifie qu'aucune offre ne correspond à tes matières pour le moment. Reviens plus tard, d'autres étudiants peuvent créer des offres.</p>
+        </div>
+        <div class="faq-item">
+            <strong>Comment contacter mon mentor ?</strong>
+            <p>Après avoir accepté un mentor, va dans "Messages" dans la sidebar ou clique "Envoyer un message" depuis la page "Mes mentors".</p>
+        </div>
+        <div class="faq-item">
+            <strong>Puis-je avoir plusieurs mentors ?</strong>
+            <p>Oui ! Tu peux créer plusieurs demandes pour différentes matières et accepter plusieurs mentors selon tes besoins.</p>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+    <h2>Prêt à trouver ton <span>mentor</span> ?</h2>
+    <p>Rejoins MentorLink et accélère ta progression dès aujourd'hui</p>
+    <div class="cta-btns">
+        <a href="{% url 'inscription' %}" class="btn-green" style="padding:12px 28px; font-size:0.95rem;">Créer mon compte</a>
+        <a href="{% url 'connexion' %}" class="btn-outline" style="padding:12px 28px; font-size:0.95rem; color:white; border-color:white;">Se connecter</a>
+    </div>
+</div>
+
+<footer>
+    © 2026 MentorLink — IFRI, Université d'Abomey-Calavi. Tous droits réservés.
+</footer>
+
+</body>
+</html>
