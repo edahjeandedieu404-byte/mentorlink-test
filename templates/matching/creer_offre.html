@@ -33,21 +33,7 @@
                         Matières que tu peux enseigner
                     </label>
 
-                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-                        <button type="button" onclick="filtrerCat(this,'all')" data-cat="all"
-                                style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--accent);background:var(--accent);color:white;font-size:0.75rem;font-weight:700;cursor:pointer;">
-                            Tout
-                        </button>
-                        <button type="button" onclick="filtrerCat(this,'info')" data-cat="info" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Informatique</button>
-                        <button type="button" onclick="filtrerCat(this,'dev')" data-cat="dev" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Développement</button>
-                        <button type="button" onclick="filtrerCat(this,'bd')" data-cat="bd" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Bases de données</button>
-                        <button type="button" onclick="filtrerCat(this,'reseau')" data-cat="reseau" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Réseaux</button>
-                        <button type="button" onclick="filtrerCat(this,'ia')" data-cat="ia" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">IA</button>
-                        <button type="button" onclick="filtrerCat(this,'securite')" data-cat="securite" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Sécurité</button>
-                        <button type="button" onclick="filtrerCat(this,'math')" data-cat="math" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Maths</button>
-                        <button type="button" onclick="filtrerCat(this,'autre')" data-cat="autre" style="padding:5px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:transparent;color:var(--gray-600);font-size:0.75rem;font-weight:700;cursor:pointer;">Autre</button>
-                    </div>
-
+                  
                     <div style="display:flex;flex-wrap:wrap;gap:8px;">
                         {% for matiere in matieres %}
                         <label class="matiere-tag" data-cat="{{ matiere.categorie }}"
