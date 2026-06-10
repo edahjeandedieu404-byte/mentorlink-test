@@ -1,4 +1,7 @@
-# MentorLink - Plateforme de mentorat étudiant
+# MentorLink - Plateforme de mentorat étudiant IFRI
+
+## Description
+Plateforme de mise en relation entre étudiants mentors et mentorés à l'IFRI.
 
 ## Installation
 
@@ -42,6 +45,8 @@ Ouvrir mentorlink/settings.py et modifier PASSWORD avec ton mot de passe Postgre
 
 Puis copier-coller :
 
+    from matching.models import Matiere
+    Matiere.objects.all().delete()
     exec(open('matching/fixtures.py', encoding='utf-8').read())
     exit()
 
@@ -54,3 +59,26 @@ Puis copier-coller :
     python manage.py runserver
 
 Accéder à : http://127.0.0.1:8000/
+
+## Filières
+- GL - Génie Logiciel
+- IA - Intelligence Artificielle
+- IM - Internet et Multimédia
+- SI - Sécurité Informatique
+- SE - Systèmes Embarqués et IoT
+
+## Matières disponibles (L1 IFRI)
+- Algorithmique
+- Langage C
+- Bases de données relationnelles
+- SQL
+- Réseaux informatiques
+- Programmation Java
+- Mathématiques générales
+- Mathématiques pour l'Informatique
+- Probabilités et Statistiques
+- Anglais
+- Systèmes d'exploitation
+- Programmation Web
+- Structures de données
+- Administration des systèmes
