@@ -7,28 +7,24 @@
 <!-- STATS -->
 <div class="stats-grid">
     <div class="stat-card">
-       
         <div class="stat-info">
             <div class="stat-value">{{ mes_offres.count }}</div>
             <div class="stat-label">Offres publiées</div>
         </div>
     </div>
     <div class="stat-card">
-        
         <div class="stat-info">
             <div class="stat-value">{{ mes_demandes.count }}</div>
             <div class="stat-label">Demandes en cours</div>
         </div>
     </div>
     <div class="stat-card">
-        
         <div class="stat-info">
             <div class="stat-value">{{ mes_mentors.count }}</div>
             <div class="stat-label">Mes mentors</div>
         </div>
     </div>
     <div class="stat-card">
-        
         <div class="stat-info">
             <div class="stat-value">{{ mes_mentores.count }}</div>
             <div class="stat-label">Mes mentorés</div>
@@ -37,18 +33,13 @@
 </div>
 
 <!-- OFFRES ET DEMANDES -->
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:20px;">
 
     <!-- Mes offres -->
     <div class="card">
         <div class="card-header">
-            <span class="card-title">
-                
-                Mes offres de mentorat
-            </span>
-            <a href="{% url 'creer_offre' %}" class="btn btn-sm btn-primary">
-                 Nouvelle
-            </a>
+            <span class="card-title">Mes offres de mentorat</span>
+            <a href="{% url 'creer_offre' %}" class="btn btn-sm btn-primary">Nouvelle</a>
         </div>
         <div class="card-body" style="padding:0;">
             {% if mes_offres %}
@@ -66,7 +57,6 @@
                 {% endfor %}
             {% else %}
                 <div style="padding:24px;text-align:center;color:var(--gray-600);">
-                    
                     <p style="font-size:0.85rem;">Aucune offre publiée</p>
                     <a href="{% url 'creer_offre' %}" class="btn btn-sm btn-primary" style="margin-top:8px;">
                         Créer une offre
@@ -79,13 +69,8 @@
     <!-- Mes demandes -->
     <div class="card">
         <div class="card-header">
-            <span class="card-title">
-                
-                Mes demandes
-            </span>
-            <a href="{% url 'creer_demande' %}" class="btn btn-sm btn-primary">
-                 Nouvelle
-            </a>
+            <span class="card-title">Mes demandes</span>
+            <a href="{% url 'creer_demande' %}" class="btn btn-sm btn-primary">Nouvelle</a>
         </div>
         <div class="card-body" style="padding:0;">
             {% if mes_demandes %}
@@ -101,13 +86,12 @@
                     </div>
                     <a href="{% url 'find_mentor' demande.id %}"
                        class="btn btn-sm btn-outline" style="margin-top:8px;">
-                         Trouver mentor
+                        Trouver mentor
                     </a>
                 </div>
                 {% endfor %}
             {% else %}
                 <div style="padding:24px;text-align:center;color:var(--gray-600);">
-                    
                     <p style="font-size:0.85rem;">Aucune demande en cours</p>
                     <a href="{% url 'creer_demande' %}" class="btn btn-sm btn-primary" style="margin-top:8px;">
                         Créer une demande
@@ -120,15 +104,12 @@
 </div>
 
 <!-- MENTORS ET MENTORÉS -->
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;">
 
     <!-- Mes mentors -->
     <div class="card">
         <div class="card-header">
-            <span class="card-title">
-                
-                Mes mentors
-            </span>
+            <span class="card-title">Mes mentors</span>
         </div>
         <div class="card-body" style="padding:0;">
             {% if mes_mentors %}
@@ -141,15 +122,11 @@
                         <div style="font-weight:600;font-size:0.88rem;">{{ rel.mentor.get_full_name }}</div>
                         <div style="font-size:0.75rem;color:var(--gray-600);">{{ rel.mentor.get_filiere_display }}</div>
                     </div>
-                    <a href="{% url 'nouvelle_conversation' rel.mentor.id %}"
-                       class="btn btn-sm btn-outline">
-                        
-                    </a>
+                    <a href="{% url 'nouvelle_conversation' rel.mentor.id %}" class="btn btn-sm btn-outline">Message</a>
                 </div>
                 {% endfor %}
             {% else %}
                 <div style="padding:24px;text-align:center;color:var(--gray-600);">
-                    
                     <p style="font-size:0.85rem;">Aucun mentor associé</p>
                 </div>
             {% endif %}
@@ -159,10 +136,7 @@
     <!-- Mes mentorés -->
     <div class="card">
         <div class="card-header">
-            <span class="card-title">
-                
-                Mes mentorés
-            </span>
+            <span class="card-title">Mes mentorés</span>
         </div>
         <div class="card-body" style="padding:0;">
             {% if mes_mentores %}
@@ -175,15 +149,11 @@
                         <div style="font-weight:600;font-size:0.88rem;">{{ rel.mentore.get_full_name }}</div>
                         <div style="font-size:0.75rem;color:var(--gray-600);">{{ rel.mentore.get_filiere_display }}</div>
                     </div>
-                    <a href="{% url 'nouvelle_conversation' rel.mentore.id %}"
-                       class="btn btn-sm btn-outline">
-                        
-                    </a>
+                    <a href="{% url 'nouvelle_conversation' rel.mentore.id %}" class="btn btn-sm btn-outline">Message</a>
                 </div>
                 {% endfor %}
             {% else %}
                 <div style="padding:24px;text-align:center;color:var(--gray-600);">
-                    
                     <p style="font-size:0.85rem;">Aucun mentoré associé</p>
                 </div>
             {% endif %}
