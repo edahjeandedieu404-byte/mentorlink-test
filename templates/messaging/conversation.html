@@ -45,8 +45,8 @@
         </div>
 
         <div class="chat-messages" id="chat-messages">
-            {% if messages %}
-                {% for msg in messages %}
+            {% if msgs %}
+    	{% for msg in msgs %}
                 <div class="message-bubble {% if msg.auteur == user %}sent{% else %}received{% endif %}">
                     <div class="bubble">{{ msg.contenu }}</div>
                     <div class="bubble-time">{{ msg.date_envoi|date:"H:i" }}</div>

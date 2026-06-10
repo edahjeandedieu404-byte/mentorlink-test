@@ -415,7 +415,7 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 .sidebar-toggle { display: none; background: none; border: none; cursor: pointer; color: var(--gray-800); padding: 4px; }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 1366px) {
+@media (max-width: 768px)  {
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .main-content { margin-left: 0; }

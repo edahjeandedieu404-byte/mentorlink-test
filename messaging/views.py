@@ -72,10 +72,9 @@ def conversation(request, conversation_id):
             'dernier_message': c.messages.last(),
             'non_lus': non_lus,
         })
-
     return render(request, 'messaging/conversation.html', {
         'conversation': conv,
-        'messages': messages_conv,
+        'msgs': messages_conv,
         'autre': autre,
         'convs_data': convs_data,
         'non_lus_total': get_non_lus_count(request.user),
