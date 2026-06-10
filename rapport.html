@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapport IFRI_MentorLink - Groupe 31</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:1100px;margin:auto;line-height:1.7;padding:20px}
+h1,h2,h3{color:#0b4f8a}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #ccc;padding:8px}
+th{background:#0b4f8a;color:white}
+.section{margin-top:40px}
+code,pre{background:#f4f4f4;padding:10px;display:block;font-family:monospace}
+img{max-width:100%;margin-top:10px}
+</style>
+</head>
+<body>
+
+<h1>Projet Intégrateur 2025-2026</h1>
+<h2>IFRI_MentorLink</h2>
+<h3>Groupe 31</h3>
+
+<ul>
+  <li>FOLLY Godwin Isaac Prince (IA)</li>
+  <li>EDAH Jean de Dieu (SI)</li>
+  <li>ASSOGBA Mahouna Fidélia (SI)</li>
+  <li>AHOUSSINOU Awignandji Euphrasie (GL)</li>
+  <li>TOUDONOU Jijoho Lisette (GL)</li>
+  <li>HOUNTONDJI TONAKPON Leonel Desmond (IM)</li>
+</ul>
+
+<p><strong>Supervision :</strong> M. Ratheil HOUNDJI<br>
+<strong>Encadrants :</strong> M. Armand ACCROMBESSI &amp; Mme Maryse GAHOU<br>
+<strong>Année académique :</strong> 2025-2026<br>
+<strong>Établissement :</strong> Institut de Formation et de Recherche en Informatique (IFRI) — Université d'Abomey-Calavi</p>
+
+<div class="section">
+<h2>1. Présentation du projet</h2>
+<p>IFRI_MentorLink est une application web de mise en relation entre mentors et mentorés au sein de l'IFRI. Elle répond à un besoin concret d'entraide académique et professionnelle entre étudiants. Chaque utilisateur crée un profil détaillant ses compétences, ses lacunes, sa filière, son niveau et ses disponibilités. Il peut publier des offres ou des demandes de mentorat. Un algorithme de matching calcule automatiquement la compatibilité entre mentors et mentorés et propose les associations les plus pertinentes. Une messagerie intégrée permet ensuite de coordonner les sessions.</p>
+</div>
+
+<div class="section">
+<h2>2. Organisation du groupe</h2>
+<p>Le groupe est organisé en trois binômes thématiques. La communication quotidienne s'est faite via WhatsApp, et la gestion du code source via GitHub uniquement. Le dépôt a été administré par EDAH Jean de Dieu. Deux séances d'encadrement avec l'équipe pédagogique ont eu lieu durant le projet.</p>
+
+<table>
+  <tr><th>Binôme</th><th>Membres</th><th>Responsabilité</th></tr>
+  <tr><td>1</td><td>TOUDONOU Jijoho Lisette, FOLLY Godwin Isaac Prince</td><td>Messagerie, notifications, rafraîchissement automatique</td></tr>
+  <tr><td>2</td><td>AHOUSSINOU Awignandji Euphrasie, HOUNTONDJI TONAKPON Leonel Desmond</td><td>Authentification, profils, gestion des comptes</td></tr>
+  <tr><td>3</td><td>ASSOGBA Mahouna Fidélia, EDAH Jean de Dieu</td><td>Algorithme de matching, tableau de bord, recherche</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>3. Démarche de réalisation</h2>
+<p>Le projet a été réalisé en 10 jours selon une progression logique :</p>
+<ol>
+  <li><strong>Conception des maquettes</strong> — Définition de l'identité visuelle et des parcours utilisateur avant tout développement.</li>
+  <li><strong>Développement du backend</strong> — Phase la plus longue : modélisation de la base de données, modèles Django, algorithme de matching, vues et URLs.</li>
+  <li><strong>Intégration du frontend</strong> — Développement des templates HTML/CSS/JS connectés au backend Django.</li>
+  <li><strong>Tests et corrections</strong> — Validation du parcours complet : inscription → offre → demande → matching → acceptation → messagerie.</li>
+</ol>
+</div>
+
+<div class="section">
+<h2>4. Conception et architecture</h2>
+
+<h3>Architecture générale</h3>
+<p>L'application suit une architecture client-serveur avec Django comme framework backend et un rendu côté serveur via le système de templates Django.</p>
+<pre>Navigateur (HTML/CSS/JS)
+        ↕  Requêtes HTTP
+Django (Views + Templates)
+        ↕  ORM Django
+  PostgreSQL (Base de données)</pre>
+
+<h3>Structure du projet</h3>
+<table>
+  <tr><th>Application Django</th><th>Rôle</th></tr>
+  <tr><td>accounts</td><td>Gestion des utilisateurs, profils, authentification</td></tr>
+  <tr><td>matching</td><td>Offres, demandes, algorithme de matching, relations mentor-mentoré</td></tr>
+  <tr><td>messaging</td><td>Conversations et messages privés</td></tr>
+  <tr><td>mentorlink</td><td>Configuration principale (settings, URLs)</td></tr>
+</table>
+
+<h3>Algorithme de matching</h3>
+<p>La fonction <code>calculer_score</code> calcule un score de compatibilité basé sur quatre critères pondérés :</p>
+<table>
+  <tr><th>Critère</th><th>Poids</th></tr>
+  <tr><td>Compatibilité des matières / compétences</td><td>40%</td></tr>
+  <tr><td>Proximité des filières</td><td>25%</td></tr>
+  <tr><td>Compatibilité des disponibilités</td><td>20%</td></tr>
+  <tr><td>Proximité du niveau d'études</td><td>15%</td></tr>
+</table>
+<p>Les résultats sont triés par score décroissant et présentés à l'utilisateur avec le détail de chaque critère.</p>
+</div>
+
+<div class="section">
+<h2>5. Base de données</h2>
+<p>La base de données PostgreSQL est composée des tables suivantes :</p>
+<table>
+  <tr><th>Table</th><th>Description</th></tr>
+  <tr><td>accounts_utilisateur</td><td>Profils utilisateurs (nom, prénom, email, téléphone, filière, niveau, compétences, lacunes, disponibilités, photo)</td></tr>
+  <tr><td>matching_offrementorat</td><td>Offres de mentorat publiées par les mentors</td></tr>
+  <tr><td>matching_demandementorat</td><td>Demandes de mentorat publiées par les mentorés</td></tr>
+  <tr><td>matching_historiquematching</td><td>Résultats des matchings avec scores détaillés</td></tr>
+  <tr><td>matching_relationmentorat</td><td>Relations mentor-mentoré acceptées</td></tr>
+  <tr><td>matching_matiere</td><td>Liste des matières L1 IFRI disponibles</td></tr>
+  <tr><td>messaging_conversation</td><td>Conversations entre utilisateurs</td></tr>
+  <tr><td>messaging_message</td><td>Messages échangés dans chaque conversation</td></tr>
+</table>
+
+<h3>Schéma relationnel</h3>
+<img src="schema_bd.png" alt="Schéma relationnel de la base de données MentorLink">
+</div>
+
+<div class="section">
+<h2>6. Fonctionnalités développées</h2>
+
+<h3>Gestion des comptes et profils</h3>
+<ul>
+  <li>Inscription avec vérification de l'unicité de l'email et du numéro de téléphone.</li>
+  <li>Connexion sécurisée avec mot de passe hashé.</li>
+  <li>Profil complet : photo, filière, niveau, compétences, lacunes, disponibilités, bio.</li>
+  <li>Modification du profil à tout moment.</li>
+</ul>
+
+<h3>Matching</h3>
+<ul>
+  <li>Publication d'offres et de demandes de mentorat avec sélection des matières et disponibilités.</li>
+  <li>Calcul automatique du score de compatibilité.</li>
+  <li>Affichage des résultats avec score, matières communes et disponibilités communes.</li>
+  <li>Acceptation d'une proposition de mentorat.</li>
+</ul>
+
+<h3>Messagerie</h3>
+<ul>
+  <li>Conversations privées entre mentor et mentoré.</li>
+  <li>Historique complet des messages conservé en base de données.</li>
+  <li>Rafraîchissement automatique pour la réception des nouveaux messages.</li>
+  <li>Liste des conversations accessible depuis le tableau de bord.</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>7. Difficultés rencontrées</h2>
+<ul>
+  <li><strong>Conception de la base de données</strong> — La définition d'un schéma adapté au matching a nécessité plusieurs itérations.</li>
+  <li><strong>Bugs de migration Django</strong> — Des conflits entre migrations ont été rencontrés lors de l'évolution des modèles.</li>
+  <li><strong>Synchronisation Frontend / Backend</strong> — L'intégration des templates Django avec le CSS a demandé un travail d'ajustement important.</li>
+  <li><strong>Travail collaboratif avec Git</strong> — La coordination des commits entre six membres a nécessité une communication rigoureuse.</li>
+  <li><strong>Responsive sur petits écrans</strong> — L'adaptation du tableau de bord aux petits écrans a requis des corrections CSS spécifiques.</li>
+  <li><strong>Gestion du temps</strong> — Le délai de 10 jours a imposé des choix de priorités clairs.</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>8. Instructions de déploiement</h2>
+
+<h3>Prérequis</h3>
+<ul>
+  <li>Python 3.10 ou supérieur</li>
+  <li>PostgreSQL installé et en cours d'exécution</li>
+  <li>Git</li>
+</ul>
+
+<h3>Déploiement local</h3>
+<pre># 1. Cloner le dépôt
+git clone https://github.com/[username]/PIL1_2526_31.git
+cd PIL1_2526_31
+
+# 2. Créer et activer l'environnement virtuel
+python -m venv env
+env\Scripts\activate        # Windows
+source env/bin/activate     # Linux / Mac
+
+# 3. Installer les dépendances
+pip install -r requirements.txt
+
+# 4. Configurer la base de données dans settings.py
+# (NAME, USER, PASSWORD, HOST, PORT)
+
+# 5. Appliquer les migrations
+python manage.py migrate
+
+# 6. Lancer le serveur
+python manage.py runserver</pre>
+<p>L'application est accessible à l'adresse <strong>http://127.0.0.1:8000</strong></p>
+
+<h3>Déploiement en ligne (Railway)</h3>
+<pre># 1. Créer un compte sur railway.app
+# 2. Connecter le dépôt GitHub au projet Railway
+# 3. Ajouter un service PostgreSQL depuis le dashboard
+# 4. Configurer les variables d'environnement :
+#    DATABASE_URL, SECRET_KEY, DEBUG=False, ALLOWED_HOSTS
+# 5. Railway déploie automatiquement à chaque push sur main</pre>
+</div>
+
+<div class="section">
+<h2>9. Manuel d'utilisation</h2>
+<ol>
+  <li><strong>Créer un compte</strong> — Accéder à la page d'inscription, renseigner nom, prénom, email, numéro de téléphone et mot de passe.</li>
+  <li><strong>Compléter son profil</strong> — Renseigner sa filière, son niveau, ses compétences, ses lacunes, ses disponibilités et une courte bio.</li>
+  <li><strong>Publier une offre ou une demande</strong> — Depuis le tableau de bord, créer une offre pour proposer son aide ou une demande pour rechercher un mentor.</li>
+  <li><strong>Consulter les résultats de matching</strong> — Cliquer sur "Trouver mentor" depuis une demande pour voir les mentors compatibles classés par score.</li>
+  <li><strong>Accepter un match</strong> — Choisir un mentor et cliquer sur "Demander ce mentor". La relation est enregistrée dans les deux tableaux de bord.</li>
+  <li><strong>Échanger via la messagerie</strong> — Cliquer sur "Message" à côté d'un mentor ou mentoré pour ouvrir la conversation et échanger en temps réel.</li>
+</ol>
+</div>
+
+<div class="section">
+<h2>10. Conclusion</h2>
+<p>Le projet IFRI_MentorLink a permis au groupe 31 de mettre en pratique les compétences acquises en première année de formation à l'IFRI : développement web, conception de bases de données relationnelles, programmation Python avec Django et collaboration avec Git. En dix jours, l'équipe a livré une application fonctionnelle couvrant les trois modules exigés. L'organisation en binômes, la communication quotidienne et la rigueur Git ont été les clés d'une collaboration efficace malgré la contrainte de temps.</p>
+</div>
+
+</body>
+</html>
