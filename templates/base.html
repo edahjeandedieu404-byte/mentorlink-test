@@ -101,17 +101,7 @@
         <header class="topbar">
             <button class="sidebar-toggle">&#9776;</button>
             <h1 class="topbar-title">{% block page_title %}MentorLink{% endblock %}</h1>
-            <div class="topbar-actions">
-                <a href="{% url 'liste_conversations' %}" class="btn-icon" style="position:relative;">
-                    &#128172;
-                    {% if non_lus_total and non_lus_total > 0 %}
-                    <span style="position:absolute;top:-4px;right:-4px;background:var(--accent);color:white;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;">
-                        {{ non_lus_total }}
-                    </span>
-                    {% endif %}
-                </a>
-                <a href="{% url 'profil' %}" class="btn-icon">&#128100;</a>
-            </div>
+            <div class="topbar-actions"></div>
         </header>
 
         <!-- ALERTS -->

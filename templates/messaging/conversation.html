@@ -1,14 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Conversation{% endblock %}
 {% block page_title %}Messages{% endblock %}
-
 {% block content %}
 <div class="chat-container">
-
-    <!-- Sidebar conversations -->
     <div class="chat-sidebar">
         <div class="chat-sidebar-header">
-            
             Conversations
         </div>
         <div style="overflow-y:auto;flex:1;">
@@ -31,7 +27,6 @@
         </div>
     </div>
 
-    <!-- Zone de chat principale -->
     <div class="chat-main">
         <div class="chat-header">
             <div class="avatar-placeholder" style="width:38px;height:38px;border-radius:50%;font-size:0.78rem;">
@@ -49,7 +44,6 @@
             </div>
         </div>
 
-        <!-- Messages -->
         <div class="chat-messages" id="chat-messages">
             {% if messages %}
                 {% for msg in messages %}
@@ -60,26 +54,21 @@
                 {% endfor %}
             {% else %}
                 <div style="text-align:center;color:var(--gray-600);margin-top:60px;">
-                    
                     <p style="font-size:0.85rem;">Commencez la conversation !</p>
                 </div>
             {% endif %}
         </div>
 
-        <!-- Input message -->
         <div class="chat-input">
             <form method="post" style="display:flex;gap:10px;width:100%;align-items:center;">
                 {% csrf_token %}
                 <input type="text" name="contenu"
-                       placeholder="Écrire un message..."
+                       placeholder="Ecrire un message..."
                        autocomplete="off" autofocus required>
-                <button type="submit" class="send-btn">
-                    
-                </button>
+              <button type="submit" class="send-btn">&#9658;</button>
             </form>
         </div>
     </div>
-
 </div>
 {% endblock %}
 
